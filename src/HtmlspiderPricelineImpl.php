@@ -82,7 +82,7 @@ class HtmlspiderPricelineImpl implements Htmlspider{
 	
 		return $product = array(
 				'product_page_url'=>$this->url,
-				'source'=>'Chemist Warehouse',
+				'source'=>'Priceline',
 				'RRP'=>$this->parseProductPrice(),
 				'hasImage'=> ($origin_file_saved || $small_file_saved) ? 1 : 0,
 				'image_file_name'=>$small_file_saved ? $real_name : '',
@@ -119,7 +119,7 @@ class HtmlspiderPricelineImpl implements Htmlspider{
 			if ($this->url) {
 				$url_array = explode('/', $this->url);
 				//取最后一个数组
-				return ucwords( str_replace('-', ' ', $url_array[count($arr)-1]) ) ;
+				return ucwords( str_replace('-', ' ', $url_array[count($url_array)-1]) ) ;
 			}
 		};
 		return $productName;
@@ -134,7 +134,7 @@ class HtmlspiderPricelineImpl implements Htmlspider{
 	{
 		$productPrice = '';
 		if ($this->dom) {
-			$price = trim($this->dom->find('.Price')->innerHtml);
+			$price = trim($this->dom->find('.price')->innerHtml);
 			return str_replace('$', '', $price);
 		};
 		return $productPrice;
