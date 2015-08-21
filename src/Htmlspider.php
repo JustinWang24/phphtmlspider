@@ -4,7 +4,16 @@
  * 解析 Html 页面内容的工具类接口
  */
 interface Htmlspider{
+	/*
+		设置需要爬行的 url 地址
+	*/
 	public function setUrl($url);
+
+	/*
+		设置需要使用的 mvc 框架控制器类
+	*/
+	public function setCiController($controller);
+	
 	/**
 	 * 解析产品的信息并返回产品对象或者数组
 	 */

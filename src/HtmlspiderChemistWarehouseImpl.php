@@ -13,6 +13,7 @@ class HtmlspiderChemistWarehouseImpl implements Htmlspider{
 	
 	protected $url = NULL;
 	protected $dom = NULL;
+	protected $controler_obj = NULL;
 	
 	/**
 	 * 构造函数,需要传入当前调用的控制器的实例来实现某些功能
@@ -22,8 +23,18 @@ class HtmlspiderChemistWarehouseImpl implements Htmlspider{
 		$this->dom = new Dom;
 	}
 
+	/*
+		设置需要爬行的 url 地址
+	*/
 	public function setUrl($url){
 		$this->url = $url;
+	}
+
+	/*
+		设置需要使用的 mvc 框架控制器类
+	*/
+	public function setCiController($controller){
+		$this->controler_obj = $controller;
 	}
 	
 	/**
