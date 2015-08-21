@@ -30,6 +30,12 @@ interface Htmlspider{
 	 * @param string $tag
 	 */
 	public function parseProductPrice();
+
+	/**
+	 * 取得 html 中的产品描述
+	 * @param string $tag
+	 */
+	public function parseProductDescription();
 	
 	
 	/**

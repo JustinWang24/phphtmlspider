@@ -9,7 +9,7 @@
 use justinwang24\phphtmlspider\Htmlspider;
 use PHPHtmlParser\Dom;
 
-class HtmlspiderChemistWarehouseImpl implements Htmlspider{
+class HtmlspiderPricelineImpl implements Htmlspider{
 	
 	protected $url = NULL;
 	protected $dom = NULL;
@@ -21,14 +21,6 @@ class HtmlspiderChemistWarehouseImpl implements Htmlspider{
 	 */
 	public function __construct(){
 		$this->dom = new Dom;
-	}
-
-	/**
-	 * 取得 html 中的产品描述
-	 * @param string $tag
-	 */
-	public function parseProductDescription(){
-		return '';
 	}
 
 	/*
@@ -102,6 +94,18 @@ class HtmlspiderChemistWarehouseImpl implements Htmlspider{
 				'description'=>$this->parseProductDescription()
 		);
 	}
+
+	/**
+	 * 取得 html 中的产品描述
+	 * @param string $tag
+	 */
+	public function parseProductDescription(){
+		$productDesription = '';
+		if ($this->dom) {
+			return trim($this->dom->find('.short-description')->innerHtml);
+		};
+		return $productDesription;
+	}
 	
 	/**
 	 * 取得 html 中的产品名称信息
@@ -111,7 +115,12 @@ class HtmlspiderChemistWarehouseImpl implements Htmlspider{
 	{
 		$productName = '';
 		if ($this->dom) {
-			return trim($this->dom->find('.productDetail h1')->innerHtml);
+			//这个产品名称从url中直接可以解析出来
+			if ($this->url) {
+				$url_array = explode('/', $this->url);
+				//取最后一个数组
+				return ucwords( str_replace('-', ' ', $url_array[count($arr)-1]) ) ;
+			}
 		};
 		return $productName;
 	}
@@ -156,7 +165,7 @@ class HtmlspiderChemistWarehouseImpl implements Htmlspider{
 	 * @return string
 	 */
 	public function getSmallImageUrl(){
-		$tag = '.product_img_enlarge img';
+		$tag = '.product-image img';
 		$html = trim($this->dom->find($tag)->outerHtml);
 		return $this->getAttrInGivenElement($html,'src');
 	}
@@ -167,7 +176,7 @@ class HtmlspiderChemistWarehouseImpl implements Htmlspider{
 	 * @return string
 	 */
 	public function getOriginalImageUrl(){
-		$tag = '.product_img_enlarge';
+		$tag = '.product-image';
 		$html = trim($this->dom->find($tag)->outerHtml);
 		return $this->getAttrInGivenElement($html,'href');
 	}
