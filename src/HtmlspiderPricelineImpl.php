@@ -135,6 +135,10 @@ class HtmlspiderPricelineImpl implements Htmlspider{
 		$productPrice = '';
 		if ($this->dom) {
 			$price = trim($this->dom->find('.price-box .regular-price .price')->innerHtml);
+			if (strlen($price)==0) {
+				# 尝试去抓打折的价格
+				$price = trim($this->dom->find('.price-box .special-price .price')->innerHtml);
+			}
 			return str_replace('$', '', $price);
 		};
 		return $productPrice;
