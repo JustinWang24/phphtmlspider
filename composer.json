@@ -11,7 +11,10 @@
             "email": "18510209803@163.com"
         }
     ],
-    "require": {},
+    "require": {
+        "php": ">=5.4",
+        "paquettg/php-html-parser": "1.6.4"
+    },
     "autoload": {
         "psr-4": {
             "justinwang24\\phphtmlspider\\": "src"

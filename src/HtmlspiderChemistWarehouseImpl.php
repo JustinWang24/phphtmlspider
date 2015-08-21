@@ -7,6 +7,7 @@
  */
 
 use justinwang24\phphtmlspider\Htmlspider;
+use PHPHtmlParser\Dom;
 
 class HtmlspiderChemistWarehouseImpl implements Htmlspider{
 	
@@ -18,7 +19,7 @@ class HtmlspiderChemistWarehouseImpl implements Htmlspider{
 	 * @param string $controler_obj
 	 */
 	public function __construct(){
-		//$this->dom = new Dom;
+		$this->dom = new Dom;
 	}
 
 	public function getTrue(){
