@@ -4,10 +4,11 @@
  * 解析 Html 页面内容的工具类接口
  */
 interface Htmlspider{
+	public function setUrl($url);
 	/**
 	 * 解析产品的信息并返回产品对象或者数组
 	 */
-	public function parseProduct($url);
+	public function parseProduct();
 	
 	/**
 	 * 取得 html 中的产品名称信息

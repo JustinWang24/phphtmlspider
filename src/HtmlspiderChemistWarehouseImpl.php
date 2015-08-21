@@ -22,14 +22,14 @@ class HtmlspiderChemistWarehouseImpl implements Htmlspider{
 		$this->dom = new Dom;
 	}
 
-	public function getTrue(){
-		return true;
+	public function setUrl($url){
+		$this->url = $url;
 	}
 	
 	/**
 	 * 真正抓取和保存图片的方法
 	 */
-	public function parseProduct($url=NULL){
+	public function parseProduct(){
 		if (is_null($this->url) || strlen($this->url)==0 || !$this->url) {
 			return FALSE;
 		}
