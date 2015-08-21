@@ -129,11 +129,11 @@ class HtmlspiderChemistWarehouseImpl implements Htmlspider{
 	 */
 	public function getAttrInGivenElement($htmlElement,$attr_name){
 		$result = '';
-		if ($html && $attr_name) {
-			$html = str_replace('"', '\'', $html);
-			$html_array = explode($attr_name, $html);
-			if (count($html_array)>0) {
-				$result = substr($html_array[1], 2);
+		if ($htmlElement && $attr_name) {
+			$htmlElement = str_replace('"', '\'', $htmlElement);
+			$htmlElement_array = explode($attr_name, $htmlElement);
+			if (count($htmlElement_array)>0) {
+				$result = substr($htmlElement_array[1], 2);
 				$tmp_array = explode('\'',$result);
 				$result = $tmp_array[0];
 			}
@@ -160,6 +160,6 @@ class HtmlspiderChemistWarehouseImpl implements Htmlspider{
 	public function getOriginalImageUrl(){
 		$tag = '.product_img_enlarge';
 		$html = trim($this->dom->find($tag)->outerHtml);
-		return $this->getAttrInGivenElement($html,'src');
+		return $this->getAttrInGivenElement($html,'href');
 	}
 }
