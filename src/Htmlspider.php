@@ -13,7 +13,7 @@ interface Htmlspider{
 		设置需要使用的 mvc 框架控制器类
 	*/
 	public function setCiController($controller);
-	
+
 	/**
 	 * 解析产品的信息并返回产品对象或者数组
 	 */
@@ -34,17 +34,15 @@ interface Htmlspider{
 	
 	/**
 	 * 取得产品的原始图片 url 地址
-	 * @param string $html
 	 * @return string
 	 */
-	public function getOriginalImageUrl($html=NULL);
+	public function getOriginalImageUrl();
 	
 	/**
 	 * 取得产品的缩略图片 url 地址
-	 * @param string $html
 	 * @return string
 	 */
-	public function getSmallImageUrl($html=NULL);
+	public function getSmallImageUrl();
 	
 	/**
 	 * 取得给定的 HTML 标签代码中的某个属性的值

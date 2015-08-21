@@ -64,22 +64,25 @@ class HtmlspiderChemistWarehouseImpl implements Htmlspider{
 		//检查制造商完毕
 	
 		//取得图片的 url
-		$image = $this->parseProductImageUrl();
-	
 		$real_name = random_string('alpha', 10).time().'.png';
 		$origin_file_saved = FALSE;
 		$small_file_saved = FALSE;
-		if ( strlen($image['original_url'])>0 ) {
-			$origin_file_saved = $this->controler_obj->_save_remote_image('original_'.$real_name,$image['original_url']);
+
+		$small_image_url = $this->getSmallImageUrl();
+		$origin_image_url = $this->getOriginalImageUrl();
+
+		if ( strlen( $origin_image_url )>0 ) {
+			$origin_file_saved = $this->controler_obj->_save_remote_image( 'original_'.$real_name, $origin_image_url);
 		}
 	
-		if ( strlen($image['small_url'])>0 ) {
-			$small_file_saved = $this->controler_obj->_save_remote_image($real_name,$image['small_url']);
+		if ( strlen( $small_image_url )>0 ) {
+			$small_file_saved = $this->controler_obj->_save_remote_image( $real_name , $small_image_url );
 		}
 		//保存图片完成
 	
 		return $product = array(
 				'product_page_url'=>$this->url,
+				'source'=>'Chemist Warehouse',
 				'RRP'=>$this->parseProductPrice(),
 				'hasImage'=> ($origin_file_saved || $small_file_saved) ? 1 : 0,
 				'image_file_name'=>$small_file_saved ? $real_name : '',
@@ -143,11 +146,10 @@ class HtmlspiderChemistWarehouseImpl implements Htmlspider{
 	 * @param string $html
 	 * @return string
 	 */
-	public function getSmallImageUrl($html=NULL){
-		if ($html) {
-			return $this->getAttr($html,'src');
-		}
-		return '';
+	public function getSmallImageUrl(){
+		$tag = '.product_img_enlarge img';
+		$html = trim($this->dom->find($tag)->outerHtml);
+		return $this->getAttrInGivenElement($html,'src');
 	}
 	
 	/**
@@ -155,10 +157,9 @@ class HtmlspiderChemistWarehouseImpl implements Htmlspider{
 	 * @param string $html
 	 * @return string
 	 */
-	public function getOriginalImageUrl($html=NULL){
-		if ($html) {
-			return $this->getAttr($html,'href');
-		}
-		return '';
+	public function getOriginalImageUrl(){
+		$tag = '.product_img_enlarge';
+		$html = trim($this->dom->find($tag)->outerHtml);
+		return $this->getAttrInGivenElement($html,'src');
 	}
 }
