@@ -5,7 +5,10 @@
  * @author justinwang
  *
  */
-class HtmlspiderChemistWarehouseImpl{
+
+use justinwang24\phphtmlspider\Htmlspider;
+
+class HtmlspiderChemistWarehouseImpl implements Htmlspider{
 	
 	protected $url = NULL;
 	protected $dom = NULL;
