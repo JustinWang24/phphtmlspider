@@ -102,7 +102,7 @@ class HtmlspiderPricelineImpl implements Htmlspider{
 	public function parseProductDescription(){
 		$productDesription = '';
 		if ($this->dom) {
-			return trim($this->dom->find('.short-description')->innerHtml);
+			return trim($this->dom->find('#collateral-tabs .tab-content .std .std')->innerHtml);
 		};
 		return $productDesription;
 	}
@@ -134,7 +134,7 @@ class HtmlspiderPricelineImpl implements Htmlspider{
 	{
 		$productPrice = '';
 		if ($this->dom) {
-			$price = trim($this->dom->find('.price')->innerHtml);
+			$price = trim($this->dom->find('.price-box .regular-price .price')->innerHtml);
 			return str_replace('$', '', $price);
 		};
 		return $productPrice;
