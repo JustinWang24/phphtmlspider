@@ -74,7 +74,7 @@ class HtmlspiderAminozImpl implements Htmlspider{
 		}
 		//保存图片完成
 	
-		return $product = array(
+		$product = array(
 				'product_page_url'=>$this->url,
 				'source'=>'Aminoz',
 				'RRP'=>$this->parseProductPrice(),
@@ -85,9 +85,16 @@ class HtmlspiderAminozImpl implements Htmlspider{
 				'manufacturer'=>$this->parseProductManufacturer(),
 				'product_id'=>random_string('numeric', 4).time(),   //产生一个产品代码
 				'published'=>0,  //默认不展示
-				'description'=>$this->parseProductDescription(),
-				'barcode'=>$this->parseProductBarcode()
+				'description'=>$this->parseProductDescription()
 		);
+
+		//有的页面可能没有包含 barcode 的信息,所以要检查一下
+		$barcode = $this->parseProductBarcode();
+		if (strlen($barcode)>0) {
+			$product['barcode'] = $barcode;
+		}
+
+		return $product;
 	}
 
 	/*
@@ -122,9 +129,15 @@ class HtmlspiderAminozImpl implements Htmlspider{
 			$element = str_replace('</th>', '', $element);
 			$element = str_replace('<td class="data">', '', $element);
 			$element = str_replace('</td>', '', $element);
-			$element = str_replace('Barcode', '', $element);
 
-			$barcode = trim($element);
+			if (strpos($element, 'Barcode')===FALSE) {
+				# 页面没有包含 barcode 的信息
+				$barcode = '';
+			}else{
+				$element = str_replace('Barcode', '', $element);
+				$barcode = trim($element);
+			}
+			
 		}
 		return $barcode;
 	}
