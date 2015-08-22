@@ -76,7 +76,7 @@ class HtmlspiderAminozImpl implements Htmlspider{
 	
 		return $product = array(
 				'product_page_url'=>$this->url,
-				'source'=>'Priceline',
+				'source'=>'Aminoz',
 				'RRP'=>$this->parseProductPrice(),
 				'hasImage'=> ($origin_file_saved || $small_file_saved) ? 1 : 0,
 				'image_file_name'=>$small_file_saved ? $real_name : '',
@@ -97,7 +97,7 @@ class HtmlspiderAminozImpl implements Htmlspider{
 		$manufacturer = '';
 		if ($this->dom) {
 			# code...
-			$element = $this->dom->find('table#product-attribute-specs-table tr',0);
+			$element = $this->dom->find('table#product-attribute-specs-table tr',0)->innertext;
 			$temp_arr = explode(' ', $element);
 			$temp_arr[0] = '';
 			$manufacturer = implode(' ', $temp_arr);
@@ -112,7 +112,7 @@ class HtmlspiderAminozImpl implements Htmlspider{
 		$barcode = '';
 		if ($this->dom) {
 			# code...
-			$element = $this->dom->find('table#product-attribute-specs-table tr',1);
+			$element = $this->dom->find('table#product-attribute-specs-table tr',1)->innertext;
 			$temp_arr = explode(' ', $element);
 			$barcode = $temp_arr[1];
 		}
@@ -161,10 +161,10 @@ class HtmlspiderAminozImpl implements Htmlspider{
 	{
 		$productPrice = '';
 		if ($this->dom) {
-			$price = trim($this->dom->find('.price-box .regular-price .price')->innerHtml);
+			$price = trim($this->dom->find('.regular-price .price',0)->innertext);
 			if (strlen($price)==0) {
 				# 尝试去抓打折的价格
-				$price = trim($this->dom->find('.price-box .special-price .price')->innerHtml);
+				$price = trim($this->dom->find('.special-price .price',0)->innertext);
 			}
 			return str_replace('$', '', $price);
 		};
