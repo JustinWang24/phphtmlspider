@@ -98,6 +98,11 @@ class HtmlspiderAminozImpl implements Htmlspider{
 		if ($this->dom) {
 			# code...
 			$element = $this->dom->find('table#product-attribute-specs-table tr',0)->innertext;
+			$element = str_replace('<th>', '', $element);
+			$element = str_replace('</th>', '', $element);
+			$element = str_replace('<td class="data">', '', $element);
+			$element = str_replace('</td>', '', $element);
+
 			$temp_arr = explode(' ', $element);
 			$temp_arr[0] = '';
 			$manufacturer = implode(' ', $temp_arr);
@@ -113,6 +118,12 @@ class HtmlspiderAminozImpl implements Htmlspider{
 		if ($this->dom) {
 			# code...
 			$element = $this->dom->find('table#product-attribute-specs-table tr',1)->innertext;
+
+			$element = str_replace('<th>', '', $element);
+			$element = str_replace('</th>', '', $element);
+			$element = str_replace('<td class="data">', '', $element);
+			$element = str_replace('</td>', '', $element);
+
 			$temp_arr = explode(' ', $element);
 			$barcode = $temp_arr[1];
 		}
