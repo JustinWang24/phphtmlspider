@@ -102,10 +102,9 @@ class HtmlspiderAminozImpl implements Htmlspider{
 			$element = str_replace('</th>', '', $element);
 			$element = str_replace('<td class="data">', '', $element);
 			$element = str_replace('</td>', '', $element);
+			$element = str_replace('Manufacturer', '', $element);
 
-			$temp_arr = explode(' ', $element);
-			$temp_arr[0] = '';
-			$manufacturer = implode(' ', $temp_arr);
+			$manufacturer = trim($element);
 		}
 		return $manufacturer;
 	}
@@ -123,9 +122,9 @@ class HtmlspiderAminozImpl implements Htmlspider{
 			$element = str_replace('</th>', '', $element);
 			$element = str_replace('<td class="data">', '', $element);
 			$element = str_replace('</td>', '', $element);
+			$element = str_replace('Barcode', '', $element);
 
-			$temp_arr = explode(' ', $element);
-			$barcode = $temp_arr[1];
+			$barcode = trim($element);
 		}
 		return $barcode;
 	}
