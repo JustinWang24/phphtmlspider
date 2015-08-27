@@ -18,6 +18,12 @@ interface Htmlspider{
 	 * 解析产品的信息并返回产品对象或者数组
 	 */
 	public function parseProduct();
+
+	/**
+	 * 取得搜索 url 返回结果页面中的产品链接页面
+	 * @param string $tag
+	 */
+	public function parseProductLinkFromSearchUrl($url);
 	
 	/**
 	 * 取得 html 中的产品名称信息

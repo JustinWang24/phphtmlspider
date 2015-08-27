@@ -23,6 +23,14 @@ class HtmlspiderPricelineImpl implements Htmlspider{
 		$this->dom = new Dom;
 	}
 
+	/**
+	 * 取得搜索 url 返回结果页面中的产品链接页面
+	 * @param string $tag
+	 */
+	public function parseProductLinkFromSearchUrl($url){
+		return null;
+	}
+
 	/*
 		设置需要爬行的 url 地址
 	*/

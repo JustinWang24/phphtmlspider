@@ -24,6 +24,14 @@ class HtmlspiderChemistWarehouseImpl implements Htmlspider{
 	}
 
 	/**
+	 * 取得搜索 url 返回结果页面中的产品链接页面
+	 * @param string $tag
+	 */
+	public function parseProductLinkFromSearchUrl($url){
+		return null;
+	}
+
+	/**
 	 * 取得 html 中的产品描述
 	 * @param string $tag
 	 */
