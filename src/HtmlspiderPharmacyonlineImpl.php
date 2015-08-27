@@ -92,7 +92,7 @@ class HtmlspiderPharmacyonlineImpl implements Htmlspider{
 	
 		$product = array(
 				'product_page_url'=>$this->url,
-				'source'=>'Aminoz',
+				'source'=>'Pharmacy Online',
 				'RRP'=>$this->parseProductPrice(),
 				'hasImage'=> ($origin_file_saved || $small_file_saved) ? 1 : 0,
 				'image_file_name'=>$small_file_saved ? $real_name : '',
@@ -202,8 +202,8 @@ class HtmlspiderPharmacyonlineImpl implements Htmlspider{
 	 * @return string
 	 */
 	public function getSmallImageUrl(){
-		$tag = '.zoomPad img';
-		return trim($this->dom->find($tag,0)->src);
+		$tag = '.product-image img';
+		return trim($this->dom->find($tag,0)->getAttribute('src'));
 	}
 	
 	/**
@@ -212,7 +212,7 @@ class HtmlspiderPharmacyonlineImpl implements Htmlspider{
 	 * @return string
 	 */
 	public function getOriginalImageUrl(){
-		$tag = '#main-image';
-		return trim($this->dom->find($tag,1)->href);
+		$tag = '.product-image';
+		return trim($this->dom->find($tag,0)->href);
 	}
 }
