@@ -201,7 +201,11 @@ class HtmlspiderAmcalImpl implements Htmlspider{
 	 */
 	public function getSmallImageUrl(){
 		$tag = '#productMainImage';
-		return 'http://s.squixa.net/www.amcal.com.au/635660319075400001'.trim($this->dom->find($tag,0)->getAttribute('src'));
+		$imgUrl = trim($this->dom->find($tag,0)->getAttribute('src'));
+		if(strpos($imgUrl, 'http://s.squixa.net/www.amcal.com.au/635660319075400001')===FALSE){
+			$imgUrl = 'http://s.squixa.net/www.amcal.com.au/635660319075400001'.$imgUrl;
+		}
+		return $imgUrl;
 	}
 	
 	/**

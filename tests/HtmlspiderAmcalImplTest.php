@@ -43,6 +43,6 @@ class HtmlspiderAmcalImplTest extends PHPUnit_Framework_TestCase{
 	    $url = 'http://www.amcal.com.au/swisse-ultiboost-high-strength-vitamin-c---60-tablets-p-9311770588263';
 		$spider->setUrl($url);
 
-		$this->assertEquals('http://s.squixa.net/www.amcal.com.au/635660319075400001/wcsstore/ExtendedSitesCatalogAssetStore/images/products/x9311770588263_LL_1.jpg.pagespeed.ic.J_ynz4kV0D.jpg', $spider->getOriginalImageUrl());
+		$this->assertEquals('http://s.squixa.net/www.amcal.com.au/635660319075400001/wcsstore/ExtendedSitesCatalogAssetStore/images/products/9311770588263_LL_1.jpg', $spider->getOriginalImageUrl());
 	}
 }
