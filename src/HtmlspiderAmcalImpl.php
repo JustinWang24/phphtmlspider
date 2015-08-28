@@ -202,9 +202,19 @@ class HtmlspiderAmcalImpl implements Htmlspider{
 	public function getSmallImageUrl(){
 		$tag = '#productMainImage';
 		$imgUrl = trim($this->dom->find($tag,0)->getAttribute('src'));
-		if(strpos($imgUrl, 'http://s.squixa.net/www.amcal.com.au/635660319075400001')===FALSE){
-			$imgUrl = 'http://s.squixa.net/www.amcal.com.au/635660319075400001'.$imgUrl;
+		if(strpos($imgUrl, 'www.amcal.com.au')===FALSE){
+			$imgUrl = 'http://www.amcal.com.au'.$imgUrl;
 		}
+		$imgUrl = str_replace('s.squixa.net/', '', $imgUrl);
+		$imgUrl = str_replace('635660319075400001/', '', $imgUrl);
+
+		//如果不进行下面的操作应该也可以取到图片
+		// $temp_arr = explode('.pagespeed.', $imgUrl);
+		// if (count($temp_arr)==2) {
+		// 	# code...
+		// 	$imgUrl = $temp_arr[0];
+		// }
+
 		return $imgUrl;
 	}
 	
