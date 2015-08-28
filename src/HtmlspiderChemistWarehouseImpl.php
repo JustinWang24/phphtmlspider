@@ -27,7 +27,7 @@ class HtmlspiderChemistWarehouseImpl implements Htmlspider{
 	 * 取得搜索 url 返回结果页面中的产品链接页面
 	 * @param string $tag
 	 */
-	public function parseProductLinkFromSearchUrl($url){
+	public function parseProductLinkFromSearchUrl($url,$barcode=null){
 		return null;
 	}
 
@@ -100,6 +100,7 @@ class HtmlspiderChemistWarehouseImpl implements Htmlspider{
 				'product_page_url'=>$this->url,
 				'source'=>'Chemist Warehouse',
 				'RRP'=>$this->parseProductPrice(),
+				'plainPrice'=>$this->parseProductPrice(),
 				'hasImage'=> ($origin_file_saved || $small_file_saved) ? 1 : 0,
 				'image_file_name'=>$small_file_saved ? $real_name : '',
 				'original_image_file_name'=>$origin_file_saved ? 'original_'.$real_name : '',

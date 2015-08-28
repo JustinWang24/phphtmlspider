@@ -9,7 +9,7 @@
 use justinwang24\phphtmlspider\Htmlspider;
 use Sunra\PhpSimple\HtmlDomParser;
 
-class HtmlspiderAminozImpl implements Htmlspider{
+class HtmlspiderAmcalImpl implements Htmlspider{
 	
 	protected $url = NULL;
 	protected $dom = NULL;
@@ -28,6 +28,14 @@ class HtmlspiderAminozImpl implements Htmlspider{
 	 * @param string $tag
 	 */
 	public function parseProductLinkFromSearchUrl($url,$barcode=null){
+		if (strlen($url)>0 && $barcode) {
+			$temp_result = file_get_contents($url);
+			$temp_arr = explode($barcode,$temp_result);
+			if (isset($temp_arr[2])) {
+				//由于返回的是一个中间页面,然后通过 js 跳转,所以只能如此解析
+				return substr( $temp_arr[2],3 ) . $barcode ;
+			}
+		}
 		return null;
 	}
 
@@ -84,7 +92,7 @@ class HtmlspiderAminozImpl implements Htmlspider{
 	
 		$product = array(
 				'product_page_url'=>$this->url,
-				'source'=>'Aminoz',
+				'source'=>'Pharmacy Online',
 				'RRP'=>$this->parseProductPrice(),
 				'plainPrice'=>$this->parseProductPrice(),
 				'hasImage'=> ($origin_file_saved || $small_file_saved) ? 1 : 0,
@@ -113,14 +121,6 @@ class HtmlspiderAminozImpl implements Htmlspider{
 		$manufacturer = '';
 		if ($this->dom) {
 			# code...
-			$element = $this->dom->find('table#product-attribute-specs-table tr',0)->innertext;
-			$element = str_replace('<th>', '', $element);
-			$element = str_replace('</th>', '', $element);
-			$element = str_replace('<td class="data">', '', $element);
-			$element = str_replace('</td>', '', $element);
-			$element = str_replace('Manufacturer', '', $element);
-
-			$manufacturer = trim($element);
 		}
 		return $manufacturer;
 	}
@@ -132,21 +132,6 @@ class HtmlspiderAminozImpl implements Htmlspider{
 		$barcode = '';
 		if ($this->dom) {
 			# code...
-			$element = $this->dom->find('table#product-attribute-specs-table tr',1)->innertext;
-
-			$element = str_replace('<th>', '', $element);
-			$element = str_replace('</th>', '', $element);
-			$element = str_replace('<td class="data">', '', $element);
-			$element = str_replace('</td>', '', $element);
-
-			if (strpos($element, 'Barcode')===FALSE) {
-				# 页面没有包含 barcode 的信息
-				$barcode = '';
-			}else{
-				$element = str_replace('Barcode', '', $element);
-				$barcode = trim($element);
-			}
-			
 		}
 		return $barcode;
 	}
@@ -158,7 +143,7 @@ class HtmlspiderAminozImpl implements Htmlspider{
 	public function parseProductDescription(){
 		$productDesription = '';
 		if ($this->dom) {
-			$productDesription = $this->dom->find('.box-description div',0)->innertext;
+			$productDesription = $this->dom->find('#tab1_content p',0)->innertext;
 			return trim( str_replace('<br />', '', $productDesription) );
 		};
 		return $productDesription;
@@ -174,11 +159,10 @@ class HtmlspiderAminozImpl implements Htmlspider{
 		if ($this->dom) {
 			//这个产品名称从url中直接可以解析出来
 			if ($this->url) {
-				$url_array = explode('/', $this->url);
-				//这个网站的产品 url 最后都带了一个 url, 可能是 magento 的
-				$posible_product_name = str_replace('.html', '', $url_array[count($url_array)-1]);
+				//product-name
+				$posible_product_name = $this->dom->find('.main_header',0)->innertext;
 				//取最后一个数组
-				return ucwords( str_replace('-', ' ', $posible_product_name) ) ;
+				return ucwords( trim($posible_product_name) ) ;
 			}
 		};
 		return $productName;
@@ -193,12 +177,9 @@ class HtmlspiderAminozImpl implements Htmlspider{
 	{
 		$productPrice = '';
 		if ($this->dom) {
-			$price = trim($this->dom->find('.regular-price .price',0)->innertext);
-			if (strlen($price)==0) {
-				# 尝试去抓打折的价格
-				$price = trim($this->dom->find('.special-price .price',0)->innertext);
-			}
-			return str_replace('$', '', $price);
+			$priceDollars = trim($this->dom->find('.price .priceDollars',0)->plaintext);
+			$priceCents = trim($this->dom->find('.price .priceCents',0)->plaintext);
+			$productPrice = $priceDollars.'.'.$priceCents;
 		};
 		return $productPrice;
 	}
@@ -219,8 +200,8 @@ class HtmlspiderAminozImpl implements Htmlspider{
 	 * @return string
 	 */
 	public function getSmallImageUrl(){
-		$tag = 'img.product-retina';
-		return trim($this->dom->find($tag,0)->src);
+		$tag = '#productMainImage';
+		return trim($this->dom->find($tag,0)->getAttribute('src'));
 	}
 	
 	/**
@@ -229,7 +210,6 @@ class HtmlspiderAminozImpl implements Htmlspider{
 	 * @return string
 	 */
 	public function getOriginalImageUrl(){
-		$tag = 'img.product-retina';
-		return trim($this->dom->find($tag,1)->src);
+		return $this->getSmallImageUrl();
 	}
 }
