@@ -92,7 +92,7 @@ class HtmlspiderAmcalImpl implements Htmlspider{
 	
 		$product = array(
 				'product_page_url'=>$this->url,
-				'source'=>'Pharmacy Online',
+				'source'=>'Amcal',
 				'RRP'=>$this->parseProductPrice(),
 				'plainPrice'=>$this->parseProductPrice(),
 				'hasImage'=> ($origin_file_saved || $small_file_saved) ? 1 : 0,
@@ -201,7 +201,7 @@ class HtmlspiderAmcalImpl implements Htmlspider{
 	 */
 	public function getSmallImageUrl(){
 		$tag = '#productMainImage';
-		return trim($this->dom->find($tag,0)->getAttribute('src'));
+		return 'http://s.squixa.net/www.amcal.com.au/635660319075400001'.trim($this->dom->find($tag,0)->getAttribute('src'));
 	}
 	
 	/**
