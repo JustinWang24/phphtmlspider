@@ -32,13 +32,12 @@ class HtmlspiderMatsukiyoImpl implements Htmlspider{
 			$ch = curl_init(); 
 			curl_setopt($ch, CURLOPT_URL, $url); 
 			curl_setopt($ch, CURLOPT_TIMEOUT, 5); 
-			curl_setopt($ch, CURLOPT_USERAGENT, _USERAGENT_); 
-			curl_setopt($ch, CURLOPT_REFERER,_REFERER_); 
+			curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01; Windows NT 5.0)'); 
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
 			$content = curl_exec($ch); 
 			curl_close($ch);
 
-			$this->dom = str_get_html( $content );
+			$this->dom = HtmlDomParser::str_get_html( $content );
 
 			$productUrl = $this->dom->find('.itemContainer__title a',0)->getAttribute('href');
 
@@ -56,13 +55,12 @@ class HtmlspiderMatsukiyoImpl implements Htmlspider{
 		$ch = curl_init(); 
 		curl_setopt($ch, CURLOPT_URL, $this->url); 
 		curl_setopt($ch, CURLOPT_TIMEOUT, 5); 
-		curl_setopt($ch, CURLOPT_USERAGENT, _USERAGENT_); 
-		curl_setopt($ch, CURLOPT_REFERER,_REFERER_); 
+		curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01; Windows NT 5.0)'); 
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
 		$content = curl_exec($ch); 
 		curl_close($ch);
 
-		$this->dom = str_get_html( $content );
+		$this->dom = HtmlDomParser::str_get_html( $content );
 	}
 
 	/*
@@ -110,7 +108,7 @@ class HtmlspiderMatsukiyoImpl implements Htmlspider{
 	
 		$product = array(
 				'product_page_url'=>$this->url,
-				'source'=>'Amcal',
+				'source'=>'Matsukiyo',
 				'RRP'=>$this->parseProductPrice(),
 				'plainPrice'=>$this->parseProductPrice(),
 				'hasImage'=> ($origin_file_saved || $small_file_saved) ? 1 : 0,
