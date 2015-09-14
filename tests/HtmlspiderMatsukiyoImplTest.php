@@ -51,4 +51,49 @@ class HtmlspiderMatsukiyoImplTest extends PHPUnit_Framework_TestCase{
 			$price
 		);
 	}
+
+	public function testParseProductImage()
+	{
+		$spider = new HtmlspiderMatsukiyoImpl;
+		$url = 'http://www.matsukiyo.co.jp/store/online/search/detail/?text=4986803803696';
+		$purl = $spider->parseProductLinkFromSearchUrl($url); 
+		//echo $purl.'.................. \r\n'; 
+
+		$spider->setUrl( $purl );
+		$price = $spider->getSmallImageUrl();
+		$this->assertEquals(
+			'http://www.matsukiyo.co.jp/medias/4986803803696-1.jpg?context=bWFzdGVyfGltYWdlc3w0MzY3MHxpbWFnZS9qcGVnfHN5cy1tYXN0ZXIvaW1hZ2VzL2gwMC9oZWMvODgwNjIyMzYwOTg4Ni80OTg2ODAzODAzNjk2XzEuanBnfGUwMmEzNzliNGNiZDBjYjEwMGE5NGMwNWQ5NGRkNTc2YmZhN2JjYzRmOTY2YWE0MWQ1YzE1NWI5YjdhNGQzMTA',
+			$price
+		);
+	}
+
+	public function testParseProductDescription()
+	{
+		$spider = new HtmlspiderMatsukiyoImpl;
+		$url = 'http://www.matsukiyo.co.jp/store/online/search/detail/?text=4986803803696';
+		$purl = $spider->parseProductLinkFromSearchUrl($url); 
+		//echo $purl.'.................. \r\n'; 
+
+		$spider->setUrl( $purl );
+		$price = $spider->parseProductDescription();
+		$this->assertEquals(
+			'hahaha',
+			$price
+		);
+	}
+
+	public function testParseProductName()
+	{
+		$spider = new HtmlspiderMatsukiyoImpl;
+		$url = 'http://www.matsukiyo.co.jp/store/online/search/detail/?text=4986803803696';
+		$purl = $spider->parseProductLinkFromSearchUrl($url); 
+		//echo $purl.'.................. \r\n'; 
+
+		$spider->setUrl( $purl );
+		$price = $spider->parseProductName();
+		$this->assertEquals(
+			'エスエスエルヘルスケアジャパン ドクター・ショール おうちでメディキュット ロング Ｍ Ｍ',
+			$price
+		);
+	}
 }

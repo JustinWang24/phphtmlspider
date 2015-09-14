@@ -43,9 +43,6 @@ class HtmlspiderMatsukiyoImpl implements Htmlspider{
 			$productUrl = $this->dom->find('.itemContainer__title a',0)->getAttribute('href');
 
 			return urldecode($productUrl);
-			
-			//return str_replace('search/detail/?text=4986803803696/store/', '', $productUrl);
-			//return $productUrl;
 		}
 		return null;
 	}
@@ -164,8 +161,8 @@ class HtmlspiderMatsukiyoImpl implements Htmlspider{
 	public function parseProductDescription(){
 		$productDesription = '';
 		if ($this->dom) {
-			$productDesription = $this->dom->find('#tab1_content p',0)->innertext;
-			return trim( str_replace('<br />', '', $productDesription) );
+			$productDesription = $this->dom->find('.item__main__describe p',0)->innertext;
+			return trim( str_replace('<br>', '', $productDesription) );
 		};
 		return $productDesription;
 	}
@@ -181,7 +178,8 @@ class HtmlspiderMatsukiyoImpl implements Htmlspider{
 			//这个产品名称从url中直接可以解析出来
 			if ($this->url) {
 				//product-name
-				$posible_product_name = $this->dom->find('.main_header',0)->innertext;
+				$posible_product_name = $this->dom->find('.item__main__detail__head',0)->innertext;
+				$posible_product_name = str_replace('&nbsp;', ' ', $posible_product_name);
 				//取最后一个数组
 				return ucwords( trim($posible_product_name) ) ;
 			}
@@ -220,13 +218,13 @@ class HtmlspiderMatsukiyoImpl implements Htmlspider{
 	 * @return string
 	 */
 	public function getSmallImageUrl(){
-		$tag = '#productMainImage';
+		$tag = '.productMainImage img';
 		$imgUrl = trim($this->dom->find($tag,0)->getAttribute('src'));
-		if(strpos($imgUrl, 'www.amcal.com.au')===FALSE){
-			$imgUrl = 'http://www.amcal.com.au'.$imgUrl;
+		if(strpos($imgUrl, 'www.matsukiyo.co.jp')===FALSE){
+			$imgUrl = 'http://www.matsukiyo.co.jp'.$imgUrl;
 		}
-		$imgUrl = str_replace('s.squixa.net/', '', $imgUrl);
-		$imgUrl = str_replace('635660319075400001/', '', $imgUrl);
+		// $imgUrl = str_replace('s.squixa.net/', '', $imgUrl);
+		// $imgUrl = str_replace('635660319075400001/', '', $imgUrl);
 
 		//如果不进行下面的操作应该也可以取到图片
 		// $temp_arr = explode('.pagespeed.', $imgUrl);
