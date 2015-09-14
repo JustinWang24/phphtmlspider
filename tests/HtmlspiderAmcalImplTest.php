@@ -29,7 +29,7 @@ class HtmlspiderAmcalImplTest extends PHPUnit_Framework_TestCase{
 		$this->assertEquals('15.95', $spider->parseProductPrice());
 	}
 
-	public function testParseSmallImageUrl()
+	public function ttestParseSmallImageUrl()
 	{
 	    $spider = new HtmlspiderAmcalImpl;
 	    $url = 'http://www.amcal.com.au/swisse-ultiboost-high-strength-vitamin-c---60-tablets-p-9311770588263';
@@ -37,7 +37,7 @@ class HtmlspiderAmcalImplTest extends PHPUnit_Framework_TestCase{
 
 		$this->assertEquals('http://s.squixa.net/www.amcal.com.au/635660319075400001/wcsstore/ExtendedSitesCatalogAssetStore/images/products/x9311770588263_LL_1.jpg.pagespeed.ic.J_ynz4kV0D.jpg', $spider->getSmallImageUrl());
 	}
-	public function testParseOriginalImageUrl()
+	public function ttestParseOriginalImageUrl()
 	{
 	    $spider = new HtmlspiderAmcalImpl;
 	    $url = 'http://www.amcal.com.au/swisse-ultiboost-high-strength-vitamin-c---60-tablets-p-9311770588263';
